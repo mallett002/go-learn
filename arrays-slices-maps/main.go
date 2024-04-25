@@ -29,9 +29,10 @@ func arrayBasics() {
 
 	// immediately initialize arr:
 	var intArr2 [3]int32 = [3]int32{1, 2, 3}
-	// or intArr2 := [3]int32{1, 2, 3}
+	intArrInferred := [3]int32{1, 2, 3}
 	inferred := [...]int32{1, 2, 3}
 	fmt.Println(intArr2)
+	fmt.Println(intArrInferred)
 	fmt.Println(inferred)
 }
 
@@ -67,7 +68,7 @@ func sliceBasics() {
 	}
 
 	// or
-	for i:=0; i<10; i++ {
+	for i := 0; i < 10; i++ {
 		fmt.Println(i)
 	}
 
