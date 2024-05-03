@@ -25,6 +25,8 @@ func main() {
 
 // adds website to channel if its chicken price is lower or equal to max chicken price
 func checkChickenPrices(website string, chickenChannel chan string) {
+	fmt.Printf("\nChecking chicken prices for %s", website)
+	// while loop in go:
 	for {
 		time.Sleep(time.Second * 1)
 
@@ -38,6 +40,7 @@ func checkChickenPrices(website string, chickenChannel chan string) {
 }
 
 func checkTofuPrices(website string, tofuChannel chan string) {
+	fmt.Printf("\nChecking tofu prices for %s", website)
 	for {
 		time.Sleep(time.Second * 1)
 
@@ -55,8 +58,8 @@ func sendMessage(chickenChannel chan string, tofuChannel chan string) {
 	// select: if receives value from chickenChannel, will set it to var website and run the first case
 	select {
 		case website := <- chickenChannel:
-			fmt.Printf("\nFound a deal on chicken at %s", website)
+			fmt.Printf("\n\nFound a deal on chicken at %s", website)
 		case website := <- tofuChannel:
-			fmt.Printf("\nFound a deal on tofu at %s", website)
+			fmt.Printf("\n\nFound a deal on tofu at %s", website)
 	}
 }
