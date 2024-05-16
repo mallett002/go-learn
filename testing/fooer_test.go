@@ -85,16 +85,13 @@ func TestFooerParallelTable(t *testing.T) {
 	for _, tt := range data {
 		t.Run(tt.title, func(t *testing.T) {
 			t.Parallel()
-
-			t.Logf("Running: %s", tt.title)
-
 			result := Fooer(tt.input)
 
 			if result != tt.expected {
-				t.Errorf("Expected %s; Received: %s", tt.expected, result)
+				t.Errorf("got %s, want %s", result, tt.expected)
 			}
 		})
 	}
 }
 
-// Skipping tests
+// Todo: Skipping tests, but first Look at why warnings ^^
