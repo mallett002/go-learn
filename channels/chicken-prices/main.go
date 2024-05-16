@@ -28,7 +28,7 @@ func checkChickenPrices(website string, chickenChannel chan string) {
 	fmt.Printf("\nChecking chicken prices for %s", website)
 	// while loop in go:
 	for {
-		time.Sleep(time.Second * 1)
+		time.Sleep(time.Second * 1) // making api call...
 
 		var chickenPrice = rand.Float32() * 20
 
