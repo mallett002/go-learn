@@ -1,6 +1,11 @@
 package main
 
-import "testing"
+import (
+	"testing"
+	"fmt"
+)
+
+// Guide about testing: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/
 
 func TestFooer(t *testing.T) {
 	result := Fooer(3)
@@ -70,6 +75,8 @@ func TestFooerParallel(t *testing.T) {
 }
 
 func TestFooerParallelTable(t *testing.T) {
+	t.Parallel()
+
 	var data = []struct {
 		title 	string
 		input	int
@@ -84,7 +91,7 @@ func TestFooerParallelTable(t *testing.T) {
 	// Run table tests in parallel
 	for _, tt := range data {
 		t.Run(tt.title, func(t *testing.T) {
-			t.Parallel()
+			t.Logf("Foer test: %q for %v", tt.title, tt.input)
 			result := Fooer(tt.input)
 
 			if result != tt.expected {
@@ -94,4 +101,46 @@ func TestFooerParallelTable(t *testing.T) {
 	}
 }
 
-// Todo: Skipping tests, but first Look at why warnings ^^
+// `go test -v -test.short` will skip this test
+// If have mix of integration and unit, and just want to run unit
+// add this to unit tests
+func TestFooerSkipped(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+
+	if result := Fooer(3); result != "Foo" {
+		t.Errorf("Error. Wanted %s, Got %s", "Foo", result)
+	}
+}
+
+// Read about test cleanup: https://ieftimov.com/posts/testing-in-go-clean-tests-using-t-cleanup/
+func TestWithCleanup(t *testing.T) {
+	if result := Fooer(3); result != "Foo" {
+		t.Errorf("Error. Wanted %s, Got %s", "Foo", result)
+	}
+
+	t.Cleanup(func() {
+		// do your cleanup logic here
+		t.Log("Cleaning up test.")
+	})
+}
+
+// Helper: improve logs when tests fail
+func TestWithHelper(t *testing.T) {
+	t.Helper()
+	if result := Fooer(3); result != "Bar" {
+		t.Errorf("Error. Wanted %s, Got %s", "Bar", result)
+	}
+}
+
+// temp dir. Creates temporary dir for test and deletes folder when test has finished
+func TestWithTempDir(t *testing.T) {
+	temp := t.TempDir()
+	fmt.Println(temp)
+}
+
+// with coverage: run tests with: `go test -cover`
+
+
+// Todo: Benchmark tests: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/#writing-benchmark-tests
