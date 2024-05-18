@@ -1,8 +1,11 @@
 package main
 
 import (
-	"testing"
 	"fmt"
+	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // Guide about testing: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/
@@ -142,5 +145,44 @@ func TestWithTempDir(t *testing.T) {
 
 // with coverage: run tests with: `go test -cover`
 
+// Benchmark test:
+// Your test function needs to be in a *_test file.
+// The name of the function must start with Benchmark.
+// The function must accept *testing.B as the unique parameter.
+// The test function must contain a for loop using b.N as its upper bound
+// See more: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/#writing-benchmark-tests
+func BenchmarkFooer(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Fooer(i);
+	}
+}
 
-// Todo: Benchmark tests: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/#writing-benchmark-tests
+// Fuzz testing: Random input to discover bugs and edge cases
+// Your test function needs to be in a _test file.
+// The name of the function must start with Fuzz.
+// The test function must accept testing.F as the unique parameter.
+// The test function must define initial values, called seed corpus, with the f.Add() method.
+// The test function must define a fuzz target
+// See more: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/#writing-fuzz-tests
+func FuzzFooer(f *testing.F) {
+	f.Add(3)
+	f.Fuzz(func(t *testing.T, a int) {
+		Fooer(a)
+	})
+}
+
+// testify package: https://github.com/stretchr/testify
+// run go get github.com/stretchr/testify
+func TestMapWithTestify(t *testing.T)  {
+	// Assert equal
+	assert.Equal(t, "Foo", Fooer(0), "0 is divisibly by 3, shour return Foo")
+
+	// Assert Not equal
+	assert.NotEqual(t, "Foo", Fooer(1), "1 is not divisible by 3, should not return Foo")
+
+	// require (stops execution if test failure)
+	require.Equal(t, map[int]string{1: "1", 2: "2"}, map[int]string{1: "1", 2: "3"})
+ 
+	// assert equality
+    assert.Equal(t, map[int]string{1: "1", 2: "2"}, map[int]string{1: "1", 2: "2"})
+}
