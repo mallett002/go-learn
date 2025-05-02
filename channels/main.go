@@ -6,17 +6,27 @@ import (
 )
 
 func main() {
-	// basics()
-	// withGoRoutines()
-	// withLoops()
-	// withBufferedChannel()
-
 	// Rules of channels
 	// 1. A channel is blocking if it is full
 	// 2. An unbuffered channel is always "full"
 	//	- It needs a receiver already ready to pull from it
 	// 3. A buffered channel is blocking once it's full
 
+	unbufferedDeadLock()
+	// fixDeadLock()
+	// withGoRoutines()
+	// withLoops()
+	// withBufferedChannel()
+}
+
+func unbufferedDeadLock() {
+	var c = make(chan int) // unbuffered channel (holds only 1 val)
+	c <- 1                 // blocks here until something reads from it (can't make it to next line)
+	var i = <-c
+	fmt.Println(i)
+}
+
+func fixDeadLock() {
 	msgch := make(chan int) // unbuffered chan (no queue) (always blocking)
 
 	// Schedule something to be ready to grab from channel first:
@@ -26,19 +36,7 @@ func main() {
 		fmt.Println(msg)
 	}()
 
-	// msgch <- 10 // deadlock (nothing ready to pull yet)
-	msgch <- 10 // hand off cookie directly to "Fred"
-
-	// msg := <-msgch // pull from it (doesn't reach here, it's too late)
-
-	// fmt.Println(msg)
-}
-
-func basics() {
-	var c = make(chan int) // unbuffered channel (holds only 1 val)
-	c <- 1                 // blocks here until something reads from it (can't make it to next line)
-	var i = <-c
-	fmt.Println(i)
+	msgch <- 10 // hand off cookie directly to "Fred", he's ready
 }
 
 func withGoRoutines() {
@@ -70,6 +68,7 @@ func withBufferedChannel() {
 	fmt.Println("Starting")
 	go processWithLoop(c)
 
+	// range loop detects channel closing and exits gracefully
 	for i := range c {
 		time.Sleep(time.Second * 1) // sleep for 1 sec (do some work that takes about a second)
 		fmt.Println(i)
