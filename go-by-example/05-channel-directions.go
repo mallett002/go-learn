@@ -13,7 +13,7 @@ func transferChan(outChan <-chan string, inChan chan<- string) {
 	inChan <- msg
 }
 
-func main() {
+func main5() {
 	outChan := make(chan string, 1)
 	inChan := make(chan string, 1)
 
