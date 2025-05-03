@@ -13,7 +13,7 @@ func worker(done chan bool) {
 	done <- true
 }
 
-func main() {
+func main4() {
 	done := make(chan bool, 1) // only have 1 thing in at a time
 
 	go worker(done)

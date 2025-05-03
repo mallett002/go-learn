@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"time"
+	// "errors"
 )
 
 func main() {
@@ -11,6 +12,10 @@ func main() {
 	// 2. An unbuffered channel is always "full"
 	//	- It needs a receiver already ready to pull from it
 	// 3. A buffered channel is blocking once it's full
+	errPower := fmt.Errorf("can't boil water")
+	theError := fmt.Errorf("Making tea: %w", errPower)
+
+	fmt.Println("failed", theError)
 
 	unbufferedDeadLock()
 	// fixDeadLock()
