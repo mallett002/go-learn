@@ -5,7 +5,7 @@ import (
 	"time"
 )
 
-func main() {
+func main7() {
 	// Mimic api call. Use non-buffered so non-blocking on the send
 	c1 := make(chan string, 1)
 	go func() {
