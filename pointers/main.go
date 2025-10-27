@@ -49,7 +49,7 @@ func slices() {
 }
 
 func functions() {
-	var thing1 = [5]float64 {1, 2, 3, 4, 5}
+	var thing1 = [5]float64{1, 2, 3, 4, 5}
 	fmt.Printf("\nThe memory location of thing1 is: %p", &thing1)
 
 	var result [5]float64 = square(thing1)

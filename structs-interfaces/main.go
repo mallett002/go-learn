@@ -8,7 +8,7 @@ type gasEngine struct {
 	mpg     uint8
 	gallons uint8
 	// ownerInfo owner
-	// owner // owner: owner --> reference it with "myEngine.name"
+	// owner // owner: owner --> reference it with "myGasEngine.name"
 	// int  field type int with name type int
 }
 
@@ -26,25 +26,25 @@ type engine interface {
 // }
 
 func main() {
-	// var myEngine gasEngine
-	var myEngine gasEngine = gasEngine{mpg: 24, gallons: 15}
-	// var myEngine gasEngine = gasEngine{24, 15, owner{"Will"}}
-	myEngine.mpg = 20
+	// var myGasEngine gasEngine
+	var myGasEngine gasEngine = gasEngine{mpg: 24, gallons: 15}
+	// var myGasEngine gasEngine = gasEngine{24, 15, owner{"Will"}}
+	myGasEngine.mpg = 20
 
-	// fmt.Println(myEngine.mpg, myEngine.gallons, myEngine.ownerInfo.name)
+	// fmt.Println(myGasEngine.mpg, myGasEngine.gallons, myGasEngine.ownerInfo.name)
 	// Can just use ".name syntax" for owner now:
-	// fmt.Println(myEngine.mpg, myEngine.gallons, myEngine.name)
-	fmt.Println(myEngine.mpg, myEngine.gallons)
+	// fmt.Println(myGasEngine.mpg, myGasEngine.gallons, myGasEngine.name)
+	fmt.Println(myGasEngine.mpg, myGasEngine.gallons)
 
 	// anonymous struct:
-	var myEngine2 = struct {
+	var myGasEngine2 = struct {
 		mpg     uint8
 		gallons uint8
 	}{25, 15}
-	fmt.Println(myEngine2.mpg, myEngine2.gallons)
+	fmt.Println(myGasEngine2.mpg, myGasEngine2.gallons)
 
 	// calling milesLeft method on struct
-	// fmt.Printf("Miles left: %v", myEngine.milesLeft())
+	// fmt.Printf("Miles left: %v", myGasEngine.milesLeft())
 
 	// using engine interface:
 	var myElectricEngine electricEngine = electricEngine{25, 15}
@@ -53,7 +53,7 @@ func main() {
 	canMakeIt(myGasolineEngine, 50)
 }
 
-// methods on struct
+// Give gas & electric engines hte milesLeft method (Implement the interface)
 func (e gasEngine) milesLeft() uint8 {
 	return e.gallons * e.mpg
 }

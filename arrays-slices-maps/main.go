@@ -7,9 +7,9 @@ import (
 
 func main() {
 	// arrayBasics()
-	sliceBasics()
+	// sliceBasics()
 	// mapBasics()
-	// speedTest()
+	speedTest()
 }
 
 func arrayBasics() {
@@ -29,8 +29,11 @@ func arrayBasics() {
 
 	// immediately initialize arr:
 	var intArr2 [3]int32 = [3]int32{1, 2, 3}
+
 	intArrInferred := [3]int32{1, 2, 3}
+
 	inferred := [...]int32{1, 2, 3}
+
 	fmt.Println(intArr2)
 	fmt.Println(intArrInferred)
 	fmt.Println(inferred)
@@ -123,7 +126,7 @@ func mapBasics() {
 }
 
 func speedTest() {
-	var capacity int = 1000000
+	var capacity int = 1_000_000
 	var testSlice = []int{}
 	var testSliceWithCapacity = make([]int, 0, capacity)
 

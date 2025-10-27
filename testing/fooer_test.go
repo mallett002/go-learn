@@ -21,9 +21,9 @@ func TestFooer(t *testing.T) {
 func TestFooerTableDriven(t *testing.T) {
 	// define columns of the table
 	var tests = []struct {
-		name 		string
-		input		int
-		expected	string
+		name     string
+		input    int
+		expected string
 	}{
 		// the table itself
 		{"9 should be Foo", 9, "Foo"},
@@ -62,7 +62,7 @@ func TestFooerStopExecution(t *testing.T) {
 func TestFooerParallel(t *testing.T) {
 	t.Run("Test 3 in Parallel", func(t *testing.T) {
 		t.Parallel() // tell go to run this test in parallel
-		
+
 		if result := Fooer(3); result != "Foo" {
 			t.Errorf("Result was incorrect, got: %s, want: %s.", result, "Foo")
 		}
@@ -70,7 +70,7 @@ func TestFooerParallel(t *testing.T) {
 
 	t.Run("Test 7 in Parallel", func(t *testing.T) {
 		t.Parallel()
-		
+
 		if result := Fooer(7); result != "7" {
 			t.Errorf("Result was incorrect, got: %s, want: %s.", result, "7")
 		}
@@ -81,8 +81,8 @@ func TestFooerParallelTable(t *testing.T) {
 	t.Parallel()
 
 	var data = []struct {
-		title 	string
-		input	int
+		title    string
+		input    int
 		expected string
 	}{
 		{"9 should be Foo", 9, "Foo"},
@@ -153,7 +153,7 @@ func TestWithTempDir(t *testing.T) {
 // See more: https://blog.jetbrains.com/go/2022/11/22/comprehensive-guide-to-testing-in-go/#writing-benchmark-tests
 func BenchmarkFooer(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Fooer(i);
+		Fooer(i)
 	}
 }
 
@@ -173,7 +173,7 @@ func FuzzFooer(f *testing.F) {
 
 // testify package: https://github.com/stretchr/testify
 // run go get github.com/stretchr/testify
-func TestMapWithTestify(t *testing.T)  {
+func TestMapWithTestify(t *testing.T) {
 	// Assert equal
 	assert.Equal(t, "Foo", Fooer(0), "0 is divisibly by 3, shour return Foo")
 
@@ -182,7 +182,7 @@ func TestMapWithTestify(t *testing.T)  {
 
 	// require (stops execution if test failure)
 	require.Equal(t, map[int]string{1: "1", 2: "2"}, map[int]string{1: "1", 2: "3"})
- 
+
 	// assert equality
-    assert.Equal(t, map[int]string{1: "1", 2: "2"}, map[int]string{1: "1", 2: "2"})
+	assert.Equal(t, map[int]string{1: "1", 2: "2"}, map[int]string{1: "1", 2: "2"})
 }
