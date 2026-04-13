@@ -8,7 +8,7 @@ import (
 // variables factored into block
 var (
 	ToBe bool = false
-	MaxInt uint64 = 1<<64 - 1 // shifts 1 left 64 times in binary: 10000000000.. 64 0s (then subtracts 1)
+	MaxInt uint64 = 1 << 64 - 1 // shifts 1 left 64 times in binary: 10000000000.. 64 0s (then subtracts 1)
 
 	// i is imaginary (allows you to do square roots of negative numbers:
 	//  √(-4) = 2i because (2i)² = 4i² = 4(-1) = -4
