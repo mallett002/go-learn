@@ -14,24 +14,50 @@ func fibonacci() func() int {
 		last = next
 		next = nextNext
 
-		return nextNext
+		return last
 	}
 }
 
+// actual solution
 func fibonacci2() func() int {
-	var last, next = 0, 1
+	var curr, next = 0, 1
 
-	return func() (nextNext int) {
-		nextNext, last, next = last, next, last+next
+	return func() (fib int) {
+		fib, curr, next = curr, next, curr+next
+
+		// Scenario to help understand
+		// curr: 1
+		// next : 2
+
+		// fib = curr (1)
+		// curr = next (2)
+		// next = curr + next (3)
+		// return fib
+
+		// visualizing this:
+		// z: 0, x: 0, y: 1    (curr)
+		// z: 0, x: 1, y: 1    (assigned)
+
+		// z: 0, x: 1, y: 1    (curr)
+		// z: 1, x: 1, y: 2    (assigned)
+
+		// z: 1, x: 1, y: 2    (curr)
+		// z: 1, x: 2, y: 3    (assigned)
+
+		// z: 1, x: 2, y: 3    (curr)
+		// z: 2, x: 3, y: 5    (assigned)
+
+		// ...
 
 		return
 	}
 }
 
 func main() {
-	// ex: 0, 1, 1, 2, 3, 5, 8
+	// ex: 0,     1,     ?
+	//    prev  curr    next
 
-	f := fibonacci2()
+	f := fibonacci()
 
 	for i := 0; i < 10; i++ {
 		fmt.Println(f())
