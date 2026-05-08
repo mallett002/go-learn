@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-// interface: set of method signatures
+// Interface: set of method signatures
 // A value of type "interface" can hold any value that implements those methods
 
 
@@ -14,8 +14,10 @@ type Abser interface {
     Abs() float64
 }
 
+// MyFloat can implement Abser if has a Abs() method
 type MyFloat float64
 
+// Vertex can implement Abser if has a Abs() method
 type Vertex struct {
     X, Y float64
 }
@@ -37,9 +39,14 @@ func (v *Vertex) Abs() float64 {
     return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
+// function that accepts an Abser interface
+func doubleAbs(a Abser) float64 {
+    return a.Abs() * 2
+}
+
 func main() {
     // Create the interface container
-    var abser Abser
+    var abser Abser // probably don't do this much in practice, just to show that Abser can be any type (MyFloat, *Vertex) as long as they have an Abs method 
 
     myFloat := MyFloat(-math.Sqrt2)
     vertex := Vertex{3, 4}
@@ -54,9 +61,16 @@ func main() {
     // a Vertex implements Abser
     abser = &vertex
     fmt.Println("abser:", abser)
+    fmt.Println("abs():", abser.Abs())
 
     // does not compile:
     // abser = vertex // (mandatory that it's a *Vertex type)
-    
-    fmt.Println("abs():", abser.Abs())
+
+
+    // Don't "NEED" the abser wrapper:
+    vertex2 := Vertex{5, 6}
+    fmt.Println("abs() on vertex2:",  vertex2.Abs())
+
+    fmt.Println("MyFloat doubleAbs: ", doubleAbs(myFloat))
+    fmt.Println("*Vertex doubleAbs: ", doubleAbs(&vertex))
 }
