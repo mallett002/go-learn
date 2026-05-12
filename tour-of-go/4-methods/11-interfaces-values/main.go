@@ -25,7 +25,7 @@ func (t *T) M() {
     fmt.Println(t.S)
 }
 
-// T implements I
+// F implements I
 func (f F) M() {
     fmt.Println(f)
 }
