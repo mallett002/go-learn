@@ -10,9 +10,10 @@ type ErrNegativeSqrt float64
 // implements error interface
 func (e ErrNegativeSqrt) Error() string {
     // Note: A call to fmt.Sprint(e) inside the Error method will send the program into an infinite loop.
-    // You can avoid this by converting e first: fmt.Sprint(float64(e)). Why?
-    // return fmt.Sprintf("cannot Sqrt negative number: %f", e)
-    return fmt.Sprint(e) // TODO: figure out why (think bc e is an error now)
+    // You can avoid this by converting e first: fmt.Sprint(float64(e)).
+    // It causes the infinite loop because fmt package checks if "e" implements error
+    // If it implmentes error, it calls the Error() method.
+    return fmt.Sprintf("cannot Sqrt negative number: %f", e)
 }
 
 func Sqrt(x float64) (float64, error) {
